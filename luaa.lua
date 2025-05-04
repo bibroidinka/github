@@ -144,8 +144,7 @@ TpNpc.MouseButton1Click:Connect(function()
 	if TpNpc_Click == false then
 		
 		TpNpc_Click = true
-		
-		while TpNpc_Click == true do
+		game:GetService("RunService").RenderStepped:Connect(function()
 			
 			local npcPosition = FindNPC("Bandit")
 			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
