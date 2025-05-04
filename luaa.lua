@@ -131,27 +131,34 @@ ESP.MouseButton1Click:Connect(function()
 
 end)
 
-local con
+local con -- Инициализация переменной коннектора
 
 TpNpc.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 	local RunService = game:GetService("RunService")
+
 	-- Проверка наличия папки Enemies
 	local enemiesFolder = workspace:FindFirstChild("Enemies")
 	while not enemiesFolder do
 		wait(0.1)
 		enemiesFolder = workspace:FindFirstChild("Enemies")
 	end
-	if TpNpc_Click == false then
-		TpNpc_Click = true
-	con = RunService.RenderStepped:Connect(function()
 
+	if not TpNpc_Click then
+		TpNpc_Click = true
+		-- Устанавливаем коннектор
+		con = RunService.RenderStepped:Connect(function()
 			local npcPosition = FindNPC("Bandit")
-			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
+			if npcPosition then
+				humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10, npcPosition.Z)
+			end
 		end)
-	else 
+	else
 		TpNpc_Click = false
-		con:Disconnect()
+		-- Проверяем, есть ли коннектор и отключаем его
+		if con then
+			con:Disconnect()
+		end
 	end
 end)
