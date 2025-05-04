@@ -44,7 +44,7 @@ function createESP(player)
 		health.Text = "Health: " .. tostring(humanoid.Health)
 	end)
 end
-
+	
 function removeESP(player)
 	if drawings[player] then
 		for _, drawing in ipairs(drawings[player]) do
@@ -132,28 +132,28 @@ ESP.MouseButton1Click:Connect(function()
 end)
 
 TpNpc.MouseButton1Click:Connect(function()
+	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+	
 	-- Проверка наличия папки Enemies
 	local enemiesFolder = workspace:FindFirstChild("Enemies")
 	while not enemiesFolder do
 		wait(0.1)
 		enemiesFolder = workspace:FindFirstChild("Enemies")
 	end
-
-	-- Поиск позиции NPC
-	local npcPosition = FindNPC("Bandit")
-	if npcPosition then
-		-- Получение персонажа игрока
-		local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
-		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-		-- Отключение коллизий для всех частей персонажа
-		for _, part in ipairs(character:GetDescendants()) do
-			if part:IsA("BasePart") then
-				part.CanCollide = false
-			end
+	if TpNpc_Click == false then
+		
+		TpNpc_Click = true
+		
+		while TpNpc_Click == true do
+			
+			local npcPosition = FindNPC("Bandit")
+			character:MoveTo(npcPosition + Vector3.new(0, 5, 0))
+			
 		end
-
-		-- Плавное перемещение с использованием MoveTo
-		character:MoveTo(npcPosition + Vector3.new(0, 5, 0)) -- Чуть выше NPC
+	else
+		TpNpc_Click = false
 	end
+	
+
 end)
