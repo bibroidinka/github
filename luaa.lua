@@ -141,10 +141,14 @@ TpNpc.MouseButton1Click:Connect(function()
 		wait(0.1)
 		enemiesFolder = workspace:FindFirstChild("Enemies")
 	end
-		
-	game:GetService("RunService").RenderStepped:Connect(function()
-			
-		local npcPosition = FindNPC("Bandit")
-		humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
-	end)
+	if TpNpc_Click == false then
+		TpNpc_Click = true
+		game:GetService("RunService").RenderStepped:Connect(function()
+
+			local npcPosition = FindNPC("Bandit")
+			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
+		end)
+	else 
+		TpNpc_Click = false
+	end
 end)
