@@ -131,10 +131,12 @@ ESP.MouseButton1Click:Connect(function()
 
 end)
 
+local con = game:GetService("RunService").RenderStepped:Connect()
+
 TpNpc.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-	
+	local RunService = game:GetService("RunService")
 	-- Проверка наличия папки Enemies
 	local enemiesFolder = workspace:FindFirstChild("Enemies")
 	while not enemiesFolder do
@@ -143,13 +145,13 @@ TpNpc.MouseButton1Click:Connect(function()
 	end
 	if TpNpc_Click == false then
 		TpNpc_Click = true
-		game:GetService("RunService").RenderStepped:Connect(function()
+	local con = RunService.RenderStepped:Connect(function()
 
 			local npcPosition = FindNPC("Bandit")
 			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
 		end)
 	else 
 		TpNpc_Click = false
-		game:GetService("RunService").RenderStepped:Disconnect()
+		con:Disconnect()
 	end
 end)
