@@ -150,5 +150,6 @@ TpNpc.MouseButton1Click:Connect(function()
 		end)
 	else 
 		TpNpc_Click = false
+		game:GetService("RunService").RenderStepped:Disconnect()
 	end
 end)
