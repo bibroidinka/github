@@ -77,7 +77,18 @@ local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 
 local TpNpc_Click = false
 local ESP_Click = false
-local ForPlayer_Click = false
+
+ForPlayer.MouseButton1Click:Connect(function()
+	
+	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
+	for _, player in ipairs(playersList) do
+		print(player.Name .. "'s Backpack contents:")
+		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
+			print(" - " .. tool.Name)  -- Печатаем имя предмета
+		end
+	end
+	
+end)
 
 -- Подключение ESP
 ESP.MouseButton1Click:Connect(function()
