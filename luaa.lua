@@ -131,7 +131,7 @@ ESP.MouseButton1Click:Connect(function()
 
 end)
 
-local con = game:GetService("RunService").RenderStepped:Connect()
+local con
 
 TpNpc.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
@@ -145,7 +145,7 @@ TpNpc.MouseButton1Click:Connect(function()
 	end
 	if TpNpc_Click == false then
 		TpNpc_Click = true
-	local con = RunService.RenderStepped:Connect(function()
+	con = RunService.RenderStepped:Connect(function()
 
 			local npcPosition = FindNPC("Bandit")
 			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
