@@ -148,9 +148,10 @@ TpNpc.MouseButton1Click:Connect(function()
 		while TpNpc_Click == true do
 			
 			local npcPosition = FindNPC("Bandit")
-			character:MoveTo(npcPosition + Vector3.new(0, 5, 0))
+			humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10,npcPosition.Z)
 			
 		end
+		wait(0.1)
 	else
 		TpNpc_Click = false
 	end
