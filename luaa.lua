@@ -89,7 +89,6 @@ function CreateLabel(text, pos)
 	label.Position = pos
 	label.Size = UDim2.new(0, 300, 0, 200)
 	label.Parent = screenui
-	label.TextWrapped = true
 	return label
 end
 
@@ -113,7 +112,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 			playerr = playerr .. tool.Name .. "\n"
 		end
 	end
-	local labeloutput = CreateLabel(playerr,UDim2.new(0,0,0,0))
+	local labeloutput = CreateLabel(playerr,UDim2.new(0.5,150,0.5,150))
 	
 	wait(90)
 	labeloutput:Destroy()
