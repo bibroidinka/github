@@ -3,7 +3,7 @@ local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
 local camera = workspace.CurrentCamera
 
-screenui.Name = "MyCheatUI"
+screenui.Name = "Games"
 screenui.Parent = localPlayer:WaitForChild("PlayerGui")
 
 local drawings = {}
