@@ -88,7 +88,7 @@ function CreateLabel(text, pos)
 	label.TextStrokeTransparency = 0
 	label.Position = pos
 	label.Size = UDim2.new(0, 300, 0, 200)
-	label.Parent = scrollingFrame
+	label.Parent = screenui
 	label.TextWrapped = true
 	return label
 end
