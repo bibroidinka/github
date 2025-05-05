@@ -143,7 +143,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 	
 
 	-- Создаем лейбл с результатом
-	LabelUpdate(playerr, UDim2.new(0.5, -150, 0, 50))
+	Labeloutput = CreateLabel(playerr, UDim2.new(0.5, -150, 0, 50))
 	scrollingFrame.Visible = true
 
 	wait(90)
