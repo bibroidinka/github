@@ -104,21 +104,27 @@ ForPlayer.MouseButton1Click:Connect(function()
 	local playerr = ""
 
 	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. " Backpack:"  -- Начинаем строку с имени игрока и текста "Backpack:"
+		playerr = playerr .. player.Name .. " Backpack:"  -- Начинаем строку с имени игрока
 
 		-- Перебор предметов в рюкзаке
 		for _, tool in ipairs(player.Backpack:GetChildren()) do  
 			playerr = playerr .. "\n" .. tool.Name  -- Добавляем каждый предмет на новой строке
 		end
 
-		playerr = playerr .. "\n\n"  -- Добавляем пустую строку после каждого игрока
+		playerr = playerr .. "\n"  -- Добавляем пустую строку после каждого игрока
 	end
 
 	-- Создаем лейбл с результатом
 	Labeloutput = CreateLabel(playerr, UDim2.new(0.5, -150, 0, 50))
+
+	-- Настройки для лейбла
+	Labeloutput.TextWrapped = true  -- Включаем перенос текста
+	Labeloutput.TextScaled = true  -- Масштабируем текст, чтобы он хорошо умещался
+
 	wait(90)
 	Labeloutput:Destroy()
 end)
+
 
 	
 -- Подключение ESP
