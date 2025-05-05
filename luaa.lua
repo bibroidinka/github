@@ -127,7 +127,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 		playerr = playerr .. player.Name .. "'s Backpack:\n"
 
 		-- Ждем, пока у игрока не будет рюкзака, если его нет
-		local backpack = player:WaitForChild("Backpack", 10)  -- Подождем 10 секунд, если не найдем рюкзак
+		local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)  -- Подождем 10 секунд
 		if backpack then
 			-- Собираем все инструменты в рюкзаке
 			local tools = {}
@@ -148,13 +148,14 @@ ForPlayer.MouseButton1Click:Connect(function()
 		end
 	end
 
-	-- Печать результатов или использование для вывода на экран
+	-- Печать результатов для дебага
 	print(playerr)
 
-	
-	local labeloutput = CreateLabel(playerr,UDim2.new(0.5,150,0.5,150))
+	-- Создаем метку с текстом
+	local labeloutput = CreateLabel(playerr, UDim2.new(0.5, 150, 0.5, 150))
 	scrollingFrame.Visible = true
-	
+
+	-- Убираем метку через 90 секунд
 	wait(90)
 	scrollingFrame.Visible = false
 	labeloutput:Destroy()
