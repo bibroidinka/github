@@ -130,17 +130,21 @@ ForPlayer.MouseButton1Click:Connect(function()
 	local playersList = game.Players:GetPlayers() -- Получаем список всех игроков 
 	local playerr = ""
 
+	-- Перебор всех игроков
 	for _, player in ipairs(playersList) do
 		playerr = playerr .. player.Name .. " Backpack:"  -- Начинаем строку с имени игрока
 
 		-- Перебор предметов в рюкзаке
-		for _, tool in ipairs(player.Backpack:GetChildren()) do  
-			playerr = playerr .. "\n" .. tool.Name  -- Добавляем каждый предмет на новой строке
+		if player.Backpack then
+			for _, tool in ipairs(player.Backpack:GetChildren()) do  
+				playerr = playerr .. "\n" .. tool.Name  -- Добавляем каждый предмет на новой строке
+			end
+		else
+			playerr = playerr .. "\nNo Backpack"  -- Если у игрока нет рюкзака
 		end
 
 		playerr = playerr .. "\n"  -- Добавляем пустую строку после каждого игрока
 	end
-	
 
 	-- Создаем лейбл с результатом
 	UpdateCanvasSize()
@@ -149,9 +153,13 @@ ForPlayer.MouseButton1Click:Connect(function()
 	scrollingFrame.Visible = true
 
 	wait(90)
-	scrollingFrame:GetChildren()[1]:Destroy()
+	-- Удаляем только самый последний лейбл, который был добавлен
+	if scrollingFrame:GetChildren()[1] then
+		scrollingFrame:GetChildren()[1]:Destroy()
+	end
 	scrollingFrame.Visible = false
 end)
+
 
 
 	
