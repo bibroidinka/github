@@ -77,6 +77,7 @@ function CreateLabel(text, pos)
 	label.Name = text
 	label.Text = text
 	label.BackgroundTransparency = 1
+	label.BackgroundColor3 = Color3.fromRGB(50,50,50)
 	label.TextScaled = true
 	label.TextColor3 = Color3.new(1, 1, 1)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
@@ -112,7 +113,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 		end
 		playerr = playerr .. "\n"
 	end
-	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,-100,0,-25))
+	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,-100,0, 0))
 	wait(90)
 	Labeloutput:Destroy()
 end)
