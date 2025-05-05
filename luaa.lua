@@ -70,6 +70,15 @@ function CreateButton(text, pos)
 	return Button
 end
 
+--прокрутка
+local scrollingFrame = Instance.new("ScrollingFrame")
+scrollingFrame.Size = UDim2.new(0.5, 0, 0.5, 0)  -- Размер ScrollingFrame
+scrollingFrame.Position = UDim2.new(0.25, 0, 0.25, 0)  -- Позиция на экране
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 200)  -- Размер канвы для прокрутки
+scrollingFrame.ScrollBarThickness = 10  -- Толщина полосы прокрутки
+scrollingFrame.Parent = screenui  -- Добавляем на экран
+
+
 --окно вывода
 function CreateLabel(text, pos)
 	
@@ -85,7 +94,7 @@ function CreateLabel(text, pos)
 	label.TextStrokeTransparency = 0
 	label.Position = pos
 	label.Size = UDim2.new(0, 300, 0, 200)
-	label.Parent = screenui
+	label.Parent = scrollingFrame
 	label.TextWrapped = true
 	return label
 end
