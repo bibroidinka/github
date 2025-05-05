@@ -107,9 +107,10 @@ ForPlayer.MouseButton1Click:Connect(function()
 	local toole = ""
 	
 	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. "Backpack "
+		playerr = playerr .. player.Name .. " Backpack "
 		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
 			playerr = playerr .. tool.Name .. ","
+			playerr = playerr .. "\n"
 		end
 		playerr = playerr .. "\n"
 	end
