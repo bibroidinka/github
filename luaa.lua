@@ -82,7 +82,7 @@ function CreateLabel(text, pos)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
 	label.TextStrokeTransparency = 0
 	label.Position = pos
-	label.Size = UDim2.new(0, 150, 0, 40)
+	label.Size = UDim2.new(0, 150, 0, 150)
 	label.Parent = screenui
 	label.TextWrapped = true
 	return label
@@ -111,7 +111,9 @@ ForPlayer.MouseButton1Click:Connect(function()
 			playerr = playerr .. tool.Name
 		end
 	end
-	Labeloutput = CreateLabel(playerr, UDim2.new(0,20,0,150))
+	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,-100,0,-25))
+	wait(90)
+	Labeloutput:Destroy()
 end)
 
 -- Подключение ESP
