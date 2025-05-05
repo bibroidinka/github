@@ -99,25 +99,27 @@ local TpNpc_Click = false
 local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
-	
-	
 	local Labeloutput
 	local playersList = game.Players:GetPlayers() -- Получаем список всех игроков 
 	local playerr = ""
-	local toole = ""
-	
+
 	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. " Backpack "
-		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
-			playerr = playerr .. tool.Name .. ","
-			playerr = playerr .. "\n"
+		playerr = playerr .. player.Name .. " Backpack:"  -- Начинаем строку с имени игрока и текста "Backpack:"
+
+		-- Перебор предметов в рюкзаке
+		for _, tool in ipairs(player.Backpack:GetChildren()) do  
+			playerr = playerr .. "\n" .. tool.Name  -- Добавляем каждый предмет на новой строке
 		end
-		playerr = playerr .. "\n"
+
+		playerr = playerr .. "\n\n"  -- Добавляем пустую строку после каждого игрока
 	end
-	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,0,0,0.5))
+
+	-- Создаем лейбл с результатом
+	Labeloutput = CreateLabel(playerr, UDim2.new(0.5, -150, 0, 50))
 	wait(90)
 	Labeloutput:Destroy()
 end)
+
 	
 -- Подключение ESP
 ESP.MouseButton1Click:Connect(function()
