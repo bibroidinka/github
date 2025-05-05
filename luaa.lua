@@ -70,6 +70,13 @@ function CreateButton(text, pos)
 	return Button
 end
 
+local scrollingFrame = Instance.new("ScrollingFrame")
+scrollingFrame.Size = UDim2.new(0, 300, 0, 200)
+scrollingFrame.CanvasSize = UDim2.new(0, 101, 0, 101) -- позже обновим
+scrollingFrame.Position = UDim2.new(0, 100, 0, 100)
+scrollingFrame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui")
+scrollingFrame.ScrollBarThickness = 8
+scrollingFrame.Parent = screenui
 
 
 
@@ -80,21 +87,32 @@ function CreateLabel(text, pos)
 	label.Name = text
 	label.Text = text
 	label.BackgroundTransparency = 0.3
-	label.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	label.TextScaled = false
-	label.TextSize = 25
+	label.TextSize = 18
 	label.TextColor3 = Color3.new(1, 1, 1)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
 	label.TextStrokeTransparency = 0
-	label.Position = pos
-	label.Size = UDim2.new(0, 300, 0, 200)
-	label.Parent = screenui
+	label.Position = UDim2.new(0, 0, 0, 0)
+	label.Size = UDim2.new(1, -10, 0, 0) -- ширина от прокрутки, высоту выставим ниже
+	label.TextWrapped = true
+	label.TextYAlignment = Enum.TextYAlignment.Top
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Font = Enum.Font.SourceSans
+	label.Parent = scrollingFrame
+
+	-- Ждём один кадр, чтобы TextBounds успел рассчитаться
+	task.wait()
+	local neededHeight = label.TextBounds.Y
+	label.Size = UDim2.new(1, -10, 0, neededHeight + 10)
+	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, neededHeight + 20)
+
 	return label
 end
 
 
 -- Кнопки
-local ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))
+local ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))	
 local ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
 local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 
@@ -112,6 +130,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 			playerr = playerr .. tool.Name .. "\n"
 		end
 	end
+	
 	local labeloutput = CreateLabel(playerr,UDim2.new(0.5,150,0.5,150))
 	
 	wait(90)
