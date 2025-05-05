@@ -113,7 +113,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 		end
 		playerr = playerr .. "\n"
 	end
-	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,-100,0, 0))
+	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0,0,0, 0))
 	wait(90)
 	Labeloutput:Destroy()
 end)
