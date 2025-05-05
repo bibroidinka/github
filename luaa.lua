@@ -76,7 +76,7 @@ function CreateLabel(text, pos)
 	local label = Instance.new("TextLabel")
 	label.Name = text
 	label.Text = text
-	label.BackgroundTransparency = 1
+	label.BackgroundTransparency = 0.3
 	label.BackgroundColor3 = Color3.fromRGB(50,50,50)
 	label.TextScaled = true
 	label.TextColor3 = Color3.new(1, 1, 1)
