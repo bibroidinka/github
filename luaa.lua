@@ -78,7 +78,8 @@ function CreateLabel(text, pos)
 	label.Text = text
 	label.BackgroundTransparency = 0.3
 	label.BackgroundColor3 = Color3.fromRGB(0,0,0)
-	label.TextScaled = true
+	label.TextScaled = false
+	label.TextSize = 40
 	label.TextColor3 = Color3.new(1, 1, 1)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
 	label.TextStrokeTransparency = 0
