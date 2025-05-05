@@ -77,6 +77,23 @@ scrollingFrame.Position = UDim2.new(0.25, 0, 0.25, 0)  -- Позиция на э
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 200)  -- Размер канвы для прокрутки
 scrollingFrame.ScrollBarThickness = 10  -- Толщина полосы прокрутки
 scrollingFrame.Parent = screenui  -- Добавляем на экран
+scrollingFrame.Visible = false
+
+-- Обновление CanvasSize при добавлении текста
+function UpdateCanvasSize()
+	local totalHeight = 0
+	for _, label in ipairs(scrollingFrame:GetChildren()) do
+		if label:IsA("TextLabel") then
+			totalHeight = totalHeight + label.Size.Y.Offset
+		end
+	end
+	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+end
+
+function LabelUpdate(text,pos)
+	local label = CreateLabel(text,pos)
+	UpdateCanvasSize()
+end
 
 
 --окно вывода
@@ -88,7 +105,7 @@ function CreateLabel(text, pos)
 	label.BackgroundTransparency = 0.3
 	label.BackgroundColor3 = Color3.fromRGB(0,0,0)
 	label.TextScaled = false
-	label.TextSize = 40
+	label.TextSize = 25
 	label.TextColor3 = Color3.new(1, 1, 1)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
 	label.TextStrokeTransparency = 0
@@ -123,16 +140,17 @@ ForPlayer.MouseButton1Click:Connect(function()
 
 		playerr = playerr .. "\n"  -- Добавляем пустую строку после каждого игрока
 	end
+	
 
 	-- Создаем лейбл с результатом
-	Labeloutput = CreateLabel(playerr, UDim2.new(0.5, -150, 0, 50))
+	LabelUpdate(playerr, UDim2.new(0.5, -150, 0, 50))
 
-	-- Настройки для лейбла
-	Labeloutput.TextWrapped = true  -- Включаем перенос текста
-	Labeloutput.TextScaled = true  -- Масштабируем текст, чтобы он хорошо умещался
+	
 
 	wait(90)
-	Labeloutput:Destroy()
+	scrollingFrame:GetChildren()[1]:Destroy()
+	
+	UpdateCanvasSize()
 end)
 
 
