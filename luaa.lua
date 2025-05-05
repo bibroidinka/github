@@ -82,7 +82,7 @@ function CreateLabel(text, pos)
 	label.TextStrokeColor3 = Color3.new(0, 0, 0)
 	label.TextStrokeTransparency = 0
 	label.Position = pos
-	label.Size = UDim2.new(0, 150, 0, 150)
+	label.Size = UDim2.new(0, 300, 0, 200)
 	label.Parent = screenui
 	label.TextWrapped = true
 	return label
