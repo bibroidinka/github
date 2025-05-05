@@ -150,7 +150,7 @@ ForPlayer.MouseButton1Click:Connect(function()
 
 	wait(90)
 	scrollingFrame:GetChildren()[1]:Destroy()
-	
+	scrollingFrame.Visible = false
 end)
 
 
