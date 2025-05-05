@@ -77,7 +77,7 @@ scrollingFrame.Position = UDim2.new(0, 100, 0, 100)
 scrollingFrame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui")
 scrollingFrame.ScrollBarThickness = 8
 scrollingFrame.Parent = screenui
-
+scrollingFrame.Visible = false
 
 
 --окно вывода
@@ -132,8 +132,10 @@ ForPlayer.MouseButton1Click:Connect(function()
 	end
 	
 	local labeloutput = CreateLabel(playerr,UDim2.new(0.5,150,0.5,150))
+	scrollingFrame.Visible = true
 	
 	wait(90)
+	scrollingFrame.Visible = false
 	labeloutput:Destroy()
 end)
 
