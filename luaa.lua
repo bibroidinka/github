@@ -132,7 +132,7 @@ ESP.MouseButton1Click:Connect(function()
 end)
 
 local con -- Инициализация переменной коннектора
-
+local conn
 TpNpc.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
@@ -161,4 +161,11 @@ TpNpc.MouseButton1Click:Connect(function()
 			con:Disconnect()
 		end
 	end
+	conn = RunService.RenderStepped:Connect(function()
+		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
+		if tool:IsA("Tool") then
+			tool:Activate()
+		end
+		
+	end)
 end)
