@@ -120,52 +120,54 @@ local TpNpc_Click = false
 local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
-	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
-	local playerr = ""
+    local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
+    local playerr = ""
 
-	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. "'s Backpack:\n"
+    for _, player in ipairs(playersList) do
+        playerr = playerr .. player.Name .. "'s Backpack:\n"
 
-		-- Ждем, пока у игрока не будет рюкзака, если его нет
-		local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)  -- Подождем 10 секунд
-		if backpack then
-			-- Собираем все инструменты в рюкзаке
-			local tools = {}
-			for _, tool in ipairs(backpack:GetChildren()) do
-				-- Проверка, что это действительно инструмент
-				if tool:IsA("Tool") then
-					table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
-				end
-			end
-			-- Если в рюкзаке есть инструменты
-			if #tools > 0 then
-				playerr = playerr .. table.concat(tools, "\n") .. "\n"
-			else
-				playerr = playerr .. "No Tools in Backpack\n"
-			end
-		else
-			playerr = playerr .. "No Backpack found\n"
-		end
-	end
+        -- Ждем, пока у игрока не будет рюкзака, если его нет
+        local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)  -- Подождем 10 секунд
+        if backpack then
+            -- Собираем все инструменты в рюкзаке
+            local tools = {}
+            for _, tool in ipairs(backpack:GetChildren()) do
+                -- Проверка, что это действительно инструмент
+                if tool:IsA("Tool") then
+                    table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
+                end
+            end
+            -- Если в рюкзаке есть инструменты
+            if #tools > 0 then
+                playerr = playerr .. table.concat(tools, "\n") .. "\n"
+            else
+                playerr = playerr .. "No Tools in Backpack\n"
+            end
+        else
+            playerr = playerr .. "No Backpack found\n"
+        end
+    end
 
-	-- Печать результатов для дебага
-	print(playerr)
+    -- Печать результатов для дебага
+    print(playerr)
 
-	-- Создаем метку с текстом
-	local labeloutput = CreateLabel(playerr, UDim2.new(0.5, 150, 0.5, 150))
+    -- Создаем метку с текстом
+    local labeloutput = CreateLabel(playerr, UDim2.new(0.5, 150, 0.5, 150))
 
-	-- Делаем scrollingFrame видимым
-	scrollingFrame.Visible = true
+    -- Делаем scrollingFrame видимым
+    scrollingFrame.Visible = true
 
-	-- Обновляем размер канвы, если текст слишком длинный
-	task.wait(0.1)  -- Немного подождем, чтобы метка успела обновиться
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, labeloutput.TextBounds.Y + 20)  -- Устанавливаем размер канвы в зависимости от высоты текста
+    -- Обновляем размер канвы, чтобы текст точно влезал в область прокрутки
+    task.wait(0.1)  -- Немного подождем, чтобы метка успела обновиться
+    local labelHeight = labeloutput.TextBounds.Y
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, labelHeight + 10)  -- Устанавливаем размер канвы в зависимости от высоты текста
 
-	-- Убираем метку через 90 секунд
-	wait(90)
-	scrollingFrame.Visible = false
-	labeloutput:Destroy()
+    -- Убираем метку через 90 секунд
+    wait(90)
+    scrollingFrame.Visible = false
+    labeloutput:Destroy()
 end)
+
 
 
 
