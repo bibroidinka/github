@@ -153,13 +153,20 @@ ForPlayer.MouseButton1Click:Connect(function()
 
 	-- Создаем метку с текстом
 	local labeloutput = CreateLabel(playerr, UDim2.new(0.5, 150, 0.5, 150))
+
+	-- Делаем scrollingFrame видимым
 	scrollingFrame.Visible = true
+
+	-- Обновляем размер канвы, если текст слишком длинный
+	task.wait(0.1)  -- Немного подождем, чтобы метка успела обновиться
+	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, labeloutput.TextBounds.Y + 20)  -- Устанавливаем размер канвы в зависимости от высоты текста
 
 	-- Убираем метку через 90 секунд
 	wait(90)
 	scrollingFrame.Visible = false
 	labeloutput:Destroy()
 end)
+
 
 
 
