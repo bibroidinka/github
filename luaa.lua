@@ -162,10 +162,8 @@ TpNpc.MouseButton1Click:Connect(function()
 		end
 	end
 	conn = RunService.RenderStepped:Connect(function()
-		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
-		if tool:IsA("Tool") then
-			tool:Activate()
-		end
+		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Tool")
+		tool:Activate()
 		
 	end)
 end)
