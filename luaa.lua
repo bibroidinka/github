@@ -103,15 +103,17 @@ local TpNpc_Click = false
 local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
-
+	
 	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
+	local playerr = ""
+	
 	for _, player in ipairs(playersList) do
-		print(player.Name .. "'s Backpack contents:")
+		playerr = playerr .. player.Name .. " Backpack`s \n"
 		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
-			print(" - " .. tool.Name)  -- Печатаем имя предмета
+			playerr = playerr .. tool.Name .. "\n"
 		end
 	end
-
+	local labeloutput - CreateLabel(playerr,UDim2.new(0,0,0,0))
 end)
 
 
