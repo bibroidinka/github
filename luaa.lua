@@ -120,14 +120,22 @@ local TpNpc_Click = false
 local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
-	
 	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
 	local playerr = ""
-	
+
 	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. " Backpack`s \n"
-		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
-			playerr = playerr .. tool.Name .. "\n"
+		playerr = playerr .. player.Name .. "'s Backpack:\n"
+
+		local backpack = player:FindFirstChild("Backpack")
+		if backpack then
+			-- Собираем все инструменты в рюкзаке
+			local tools = {}
+			for _, tool in ipairs(backpack:GetChildren()) do
+				table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
+			end
+			playerr = playerr .. table.concat(tools, "\n") .. "\n"  -- Объединяем список в одну строку
+		else
+			playerr = playerr .. "No Backpack found\n"
 		end
 	end
 	
