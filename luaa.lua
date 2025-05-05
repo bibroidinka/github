@@ -108,14 +108,15 @@ ForPlayer.MouseButton1Click:Connect(function()
 	for _, player in ipairs(playersList) do
 		playerr = playerr .. player.Name .. "Backpack "
 		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
-			playerr = playerr .. tool.Name
+			playerr = playerr .. tool.Name .. ","
 		end
+		playerr = playerr .. "\n"
 	end
 	Labeloutput = CreateLabel(playerr .. "\n", UDim2.new(0.5,-100,0,-25))
 	wait(90)
 	Labeloutput:Destroy()
 end)
-
+	
 -- Подключение ESP
 ESP.MouseButton1Click:Connect(function()
 	if ESP_Click == false then
