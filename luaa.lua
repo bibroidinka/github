@@ -70,30 +70,7 @@ function CreateButton(text, pos)
 	return Button
 end
 
---прокрутка
-local scrollingFrame = Instance.new("ScrollingFrame")
-scrollingFrame.Size = UDim2.new(0.5, 0, 0.5, 0)  -- Размер ScrollingFrame
-scrollingFrame.Position = UDim2.new(0.25, 0, 0.25, 0)  -- Позиция на экране
-scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 200)  -- Размер канвы для прокрутки
-scrollingFrame.ScrollBarThickness = 10  -- Толщина полосы прокрутки
-scrollingFrame.Parent = screenui  -- Добавляем на экран
-scrollingFrame.Visible = false
 
--- Обновление CanvasSize при добавлении текста
-function UpdateCanvasSize()
-	local totalHeight = 0
-	for _, label in ipairs(scrollingFrame:GetChildren()) do
-		if label:IsA("TextLabel") then
-			totalHeight = totalHeight + label.Size.Y.Offset
-		end
-	end
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
-end
-
-function LabelUpdate(text,pos)
-	local label = CreateLabel(text,pos)
-	UpdateCanvasSize()
-end
 
 
 --окно вывода
@@ -126,38 +103,15 @@ local TpNpc_Click = false
 local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
-	local Labeloutput
-	local playersList = game.Players:GetPlayers() -- Получаем список всех игроков 
-	local playerr = ""
 
-	-- Перебор всех игроков
+	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
 	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. " Backpack:"  -- Начинаем строку с имени игрока
-
-		-- Перебор предметов в рюкзаке
-		if player.Backpack then
-			for _, tool in ipairs(player.Backpack:GetChildren()) do  
-				playerr = playerr .. "\n" .. tool.Name  -- Добавляем каждый предмет на новой строке
-			end
-		else
-			playerr = playerr .. "\nNo Backpack"  -- Если у игрока нет рюкзака
+		print(player.Name .. "'s Backpack contents:")
+		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
+			print(" - " .. tool.Name)  -- Печатаем имя предмета
 		end
-
-		playerr = playerr .. "\n"  -- Добавляем пустую строку после каждого игрока
 	end
 
-	-- Создаем лейбл с результатом
-	UpdateCanvasSize()
-	Labeloutput = CreateLabel(playerr, UDim2.new(0.5, -150, 0, 50))
-	UpdateCanvasSize()
-	scrollingFrame.Visible = true
-
-	wait(90)
-	-- Удаляем только самый последний лейбл, который был добавлен
-	if scrollingFrame:GetChildren()[1] then
-		scrollingFrame:GetChildren()[1]:Destroy()
-	end
-	scrollingFrame.Visible = false
 end)
 
 
