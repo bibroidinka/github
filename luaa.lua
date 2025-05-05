@@ -114,6 +114,9 @@ ForPlayer.MouseButton1Click:Connect(function()
 		end
 	end
 	local labeloutput = CreateLabel(playerr,UDim2.new(0,0,0,0))
+	
+	wait(90)
+	labeloutput:Destroy()
 end)
 
 
