@@ -70,6 +70,25 @@ function CreateButton(text, pos)
 	return Button
 end
 
+--окно вывода
+function CreateLabel(text, pos)
+	
+	local label = Instance.new("TextLabel")
+	label.Name = text
+	label.Text = text
+	label.BackgroundTransparency = 1
+	label.TextScaled = true
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextStrokeColor3 = Color3.new(0, 0, 0)
+	label.TextStrokeTransparency = 0
+	label.Position = pos
+	label.Size = UDim2.new(0, 150, 0, 40)
+	label.Parent = screenui
+	label.TextWrapped = true
+	return label
+end
+
+
 -- Кнопки
 local ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))
 local ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
@@ -80,14 +99,19 @@ local ESP_Click = false
 
 ForPlayer.MouseButton1Click:Connect(function()
 	
-	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
+	
+	local Labeloutput
+	local playersList = game.Players:GetPlayers() -- Получаем список всех игроков 
+	local playerr = ""
+	local toole = ""
+	
 	for _, player in ipairs(playersList) do
-		print(player.Name .. "'s Backpack contents:")
+		playerr = playerr .. player.Name .. "Backpack "
 		for _, tool in ipairs(player.Backpack:GetChildren()) do  -- Перебор предметов в рюкзаке
-			print(" - " .. tool.Name)  -- Печатаем имя предмета
+			playerr = playerr .. tool.Name
 		end
 	end
-	
+	Labeloutput = CreateLabel(playerr, UDim2.new(0,20,0,150))
 end)
 
 -- Подключение ESP
