@@ -151,7 +151,7 @@ TpNpc.MouseButton1Click:Connect(function()
 		con = RunService.RenderStepped:Connect(function()
 			local npcPosition = FindNPC("Bandit")
 			if npcPosition then
-				humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+25, npcPosition.Z)
+				humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+10, npcPosition.Z)
 			end
 		end)
 	else
@@ -162,8 +162,8 @@ TpNpc.MouseButton1Click:Connect(function()
 		end
 	end
 	conn = RunService.RenderStepped:Connect(function()
-		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Tool")
-		if tool:IsA("Tool") then
+		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
+		if tool:IsA("Melee") then
 			tool:Activate()
 		end
 		
