@@ -3,13 +3,11 @@ local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
 local camera = workspace.CurrentCamera
 
-screenui.Name = "Games"
+screenui.Name = "MyCheatUI"
 screenui.Parent = localPlayer:WaitForChild("PlayerGui")
 
 local drawings = {}
 local NPC = workspace:WaitForChild("Enemies")
-
--- Функция поиска NPC
 function FindNPC(npcName)
 	for _, npc in ipairs(NPC:GetChildren()) do
 		if npc.Name == npcName and npc:FindFirstChild("HumanoidRootPart") then
@@ -18,8 +16,6 @@ function FindNPC(npcName)
 	end
 	return nil
 end
-
--- Функция создания ESP
 function createESP(player)
 	if player == localPlayer then return end
 
@@ -48,8 +44,7 @@ function createESP(player)
 		health.Text = "Health: " .. tostring(humanoid.Health)
 	end)
 end
-
--- Удаление ESP
+	
 function removeESP(player)
 	if drawings[player] then
 		for _, drawing in ipairs(drawings[player]) do
@@ -59,7 +54,6 @@ function removeESP(player)
 	end
 end
 
--- Создание кнопки
 function CreateButton(text, pos)
 	local Button = Instance.new("TextButton")
 	Button.Name = text
@@ -76,20 +70,24 @@ function CreateButton(text, pos)
 	return Button
 end
 
--- Создание ScrollFrame
 local scrollingFrame = Instance.new("ScrollingFrame")
-scrollingFrame.Size = UDim2.new(0, 300, 0, 200)
-scrollingFrame.Position = UDim2.new(0, 100, 0, 100)
-scrollingFrame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui")
-scrollingFrame.ScrollBarThickness = 8
-scrollingFrame.Visible = false
-scrollingFrame.BackgroundTransparency = 0
+scrollingFrame.Size = UDim2.new(0, 300, 0, 200)  -- Задаем размер scrollingFrame
+scrollingFrame.Position = UDim2.new(0, 100, 0, 100)  -- Устанавливаем позицию на экране
+scrollingFrame.Parent = screenui
+scrollingFrame.BackgroundTransparency = 0.5  -- Прозрачность фона
+scrollingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Цвет фона
+scrollingFrame.ScrollBarThickness = 8  -- Толщина полосы прокрутки
+scrollingFrame.ClipsDescendants = true  -- Обеспечиваем, чтобы содержимое не выходило за пределы
+scrollingFrame.Visible = false  -- Скрываем по умолчанию
+
+-- Инициализация CanvasSize
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)  -- Начальный размер канвы
+
 
 -- Функция для создания метки
 function CreateLabel(text, pos)
-	print("Creating label with text: " .. text)  -- Debugging line
 	local label = Instance.new("TextLabel")
-	label.Name = text
+	label.Name = "Label"
 	label.Text = text
 	label.BackgroundTransparency = 0.3
 	label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -99,25 +97,25 @@ function CreateLabel(text, pos)
 	label.TextYAlignment = Enum.TextYAlignment.Top
 	label.TextXAlignment = Enum.TextXAlignment.Left
 	label.Position = pos
-	label.Size = UDim2.new(1, -10, 0, 0)
+	label.Size = UDim2.new(1, -10, 0, 50)  -- Сделаем высоту фиксированной для отладки
 	label.Parent = scrollingFrame
 
-	-- Подождать кадр для вычисления TextBounds
-	task.wait()
-	local neededHeight = label.TextBounds.Y
-	print("TextBounds height: " .. tostring(neededHeight))  -- Debugging line
-	label.Size = UDim2.new(1, -10, 0, neededHeight + 10)
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, neededHeight + 20)  -- Обновляем размер CanvasSize
+	-- Обновление CanvasSize для корректного отображения
+	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, scrollingFrame.CanvasSize.Y.Offset + label.Size.Y.Offset)
 
 	return label
 end
 
+
 -- Кнопки
 local ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))
 local ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
-local TpNpc = CreateButton("Tp", UDim2.new(0, 20, 0, 200))
+local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 
--- Обработчик для кнопки Backpack Check
+local TpNpc_Click = false
+local ESP_Click = false
+
+--	 Тестирование: добавим несколько меток
 ForPlayer.MouseButton1Click:Connect(function()
 	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
 	local playerr = ""
@@ -132,10 +130,9 @@ ForPlayer.MouseButton1Click:Connect(function()
 			local tools = {}
 			for _, tool in ipairs(backpack:GetChildren()) do
 				if tool:IsA("Tool") then
-					table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
+					table.insert(tools, tool.Name)
 				end
 			end
-
 			-- Если в рюкзаке есть инструменты
 			if #tools > 0 then
 				playerr = playerr .. table.concat(tools, "\n") .. "\n"
@@ -147,21 +144,99 @@ ForPlayer.MouseButton1Click:Connect(function()
 		end
 	end
 
-	-- Печать результатов для дебага
-	print("Backpack details:\n" .. playerr)
+	-- Печать для отладки
+	print(playerr)
 
-	-- Создаем метку с текстом
-	local labeloutput = CreateLabel(playerr, UDim2.new(0.5, 150, 0.5, 150))
+	-- Создаем метку
+	local labeloutput = CreateLabel(playerr, UDim2.new(0, 10, 0, 10))
 
 	-- Делаем scrollingFrame видимым
 	scrollingFrame.Visible = true
 
 	-- Обновляем размер канвы, если текст слишком длинный
-	task.wait(0.1)  -- Немного подождем, чтобы метка успела обновиться
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, labeloutput.TextBounds.Y + 20)  -- Устанавливаем размер канвы в зависимости от высоты текста
+	task.wait(0.1)
+	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, scrollingFrame.CanvasSize.Y.Offset + labeloutput.Size.Y.Offset)
+end)
 
-	-- Убираем метку через 90 секунд
-	wait(90)
-	scrollingFrame.Visible = false
-	labeloutput:Destroy()
+
+
+	
+-- Подключение ESP
+ESP.MouseButton1Click:Connect(function()
+	if ESP_Click == false then
+		ESP_Click = true
+		for _, player in ipairs(players:GetPlayers()) do
+			createESP(player)
+		end
+
+		players.PlayerAdded:Connect(createESP)
+		players.PlayerRemoving:Connect(removeESP)
+
+		game:GetService("RunService").RenderStepped:Connect(function()
+			for player, drawingObjects in pairs(drawings) do
+				local character = player.Character
+				if character and character:FindFirstChild("HumanoidRootPart") then
+					local pos, onScreen = camera:WorldToViewportPoint(character.HumanoidRootPart.Position)
+					local box, health = unpack(drawingObjects)
+
+					box.Visible = onScreen
+					health.Visible = onScreen
+					if onScreen then
+						box.Position = Vector2.new(pos.X, pos.Y - 20)
+						health.Position = Vector2.new(pos.X, pos.Y + 20)
+					end
+				else
+					for _, drawing in ipairs(drawingObjects) do
+						drawing.Visible = false
+					end
+				end
+			end
+		end)
+	else 
+		ESP_Click = false
+		for _, player in ipairs(players:GetPlayers()) do
+			removeESP(player)
+		end
+		drawings = {}
+	end
+
+end)
+
+local con -- Инициализация переменной коннектора
+local conn
+TpNpc.MouseButton1Click:Connect(function()
+	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+	local RunService = game:GetService("RunService")
+
+	-- Проверка наличия папки Enemies
+	local enemiesFolder = workspace:FindFirstChild("Enemies")
+	while not enemiesFolder do
+		wait(0.1)
+		enemiesFolder = workspace:FindFirstChild("Enemies")
+	end
+
+	if not TpNpc_Click then
+		TpNpc_Click = true
+		-- Устанавливаем коннектор
+		con = RunService.RenderStepped:Connect(function()
+			local npcPosition = FindNPC("Bandit")
+			if npcPosition then
+				humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+25, npcPosition.Z)
+			end
+		end)
+	else
+		TpNpc_Click = false
+		-- Проверяем, есть ли коннектор и отключаем его
+		if con then
+			con:Disconnect()
+		end
+	end
+	conn = RunService.RenderStepped:Connect(function()
+		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
+		if tool:IsA("Melee") then
+			tool:Activate()
+		end
+		
+	end)
 end)
