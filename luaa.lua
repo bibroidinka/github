@@ -126,18 +126,31 @@ ForPlayer.MouseButton1Click:Connect(function()
 	for _, player in ipairs(playersList) do
 		playerr = playerr .. player.Name .. "'s Backpack:\n"
 
-		local backpack = player:FindFirstChild("Backpack")
+		-- Ждем, пока у игрока не будет рюкзака, если его нет
+		local backpack = player:WaitForChild("Backpack", 10)  -- Подождем 10 секунд, если не найдем рюкзак
 		if backpack then
 			-- Собираем все инструменты в рюкзаке
 			local tools = {}
 			for _, tool in ipairs(backpack:GetChildren()) do
-				table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
+				-- Проверка, что это действительно инструмент
+				if tool:IsA("Tool") then
+					table.insert(tools, tool.Name)  -- Добавляем название инструмента в таблицу
+				end
 			end
-			playerr = playerr .. table.concat(tools, "\n") .. "\n"  -- Объединяем список в одну строку
+			-- Если в рюкзаке есть инструменты
+			if #tools > 0 then
+				playerr = playerr .. table.concat(tools, "\n") .. "\n"
+			else
+				playerr = playerr .. "No Tools in Backpack\n"
+			end
 		else
 			playerr = playerr .. "No Backpack found\n"
 		end
 	end
+
+	-- Печать результатов или использование для вывода на экран
+	print(playerr)
+
 	
 	local labeloutput = CreateLabel(playerr,UDim2.new(0.5,150,0.5,150))
 	scrollingFrame.Visible = true
