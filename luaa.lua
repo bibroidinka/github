@@ -78,7 +78,7 @@ scrollingFrame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitF
 scrollingFrame.ScrollBarThickness = 8
 scrollingFrame.Parent = screenui
 scrollingFrame.Visible = false
-
+scrollingFrame.BackgroundTransparency = 0
 
 --окно вывода
 function CreateLabel(text, pos)
