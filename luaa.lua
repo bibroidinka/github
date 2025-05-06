@@ -3,7 +3,7 @@ local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
 local camera = workspace.CurrentCamera
 
-screenui.Name = "MyCheatUI"
+screenui.Name = "Zunesh Hub"
 screenui.Parent = localPlayer:WaitForChild("PlayerGui")
 
 local drawings = {}
@@ -91,15 +91,38 @@ function CreateLabel(text)
 	return textLabel
 end
 
+local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50))
 
--- Кнопки
-local ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))
-local ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
-local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 
+local Zunesh_hub_click = false
 local TpNpc_Click = false
 local ESP_Click = false
 local ForPlayer_click = false
+
+local ESP 
+local ForPlayer
+local AutoFarm
+
+Zunesh_Hub.MouseButton1Click:Connect(function()
+	if Zunesh_hub_click == false then
+		Zunesh_hub_click = true
+		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100))
+		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
+		AutoFarm = CreateButton("Tp",UDim2.new(0,20,0,200))
+		
+	else
+		Zunesh_hub_click = false
+		if ESP and ForPlayer and AutoFarm then
+			ESP:Destroy()
+			ForPlayer:Destroy()
+			AutoFarm:Destroy()
+			ESP = nil
+			ForPlayer = nil
+			AutoFarm = nil
+		end
+	end
+end)
+
 
 local labe = nil
 --	 Тестирование: добавим несколько меток
@@ -178,7 +201,7 @@ end)
 -- Переменные коннекторы
 local con 
 local conn
-TpNpc.MouseButton1Click:Connect(function()
+AutoFarm.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 	local RunService = game:GetService("RunService")
