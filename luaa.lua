@@ -99,27 +99,36 @@ local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 
 local TpNpc_Click = false
 local ESP_Click = false
+local ForPlayer_click = false
 
 --	 Тестирование: добавим несколько меток
 ForPlayer.MouseButton1Click:Connect(function()
-	local Player = game.Players:GetPlayers()
-	local player_name = ""
+	local labe
+	if	ForPlayer_click == false then
+		ForPlayer_click = true
+		
+		local Player = game.Players:GetPlayers()
+		local player_name = ""
 
-	for _, player in ipairs(Player) do
-		player_name = player_name .. player.Name .. " Backpack\n"
-		local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)
+		for _, player in ipairs(Player) do
+			player_name = player_name .. player.Name .. " Backpack\n"
+			local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)
 
-		for _, tool in ipairs(backpack:GetChildren()) do
-			player_name = player_name .. tool.Name .. "\n"
+			for _, tool in ipairs(backpack:GetChildren()) do
+				player_name = player_name .. tool.Name .. "\n"
+				if tool == nil then
+					player_name = player_name .. "Unknow \n"
+				end
+			end
 		end
+		labe = CreateLabel(player_name)
+		scrollingFrame.Visible = true
+	else
+		ForPlayer_click = false
+		labe:Destroy()
+		scrollingFrame.Visible = false
 	end
-
-	wait(5)
-	local labe = CreateLabel(player_name)
-	scrollingFrame.Visible = true
-	wait(15)
-	labe:Destroy()
-	scrollingFrame.Visible = false
+	
 end)
 
 -- Подключение ESP
