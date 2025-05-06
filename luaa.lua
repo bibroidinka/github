@@ -100,10 +100,9 @@ local TpNpc = CreateButton("Tp",UDim2.new(0,20,0,200))
 local TpNpc_Click = false
 local ESP_Click = false
 local ForPlayer_click = false
-
+local labe
 --	 Тестирование: добавим несколько меток
 ForPlayer.MouseButton1Click:Connect(function()
-	local labe
 	if	ForPlayer_click == false then
 		ForPlayer_click = true
 		
