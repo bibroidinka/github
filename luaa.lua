@@ -213,6 +213,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 				-- Проверяем, есть ли коннектор и отключаем его
 				if con then
 					con:Disconnect()
+					con = nil
 				end
 			end
 		end)
