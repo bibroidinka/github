@@ -110,6 +110,121 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150))
 		AutoFarm = CreateButton("Tp",UDim2.new(0,20,0,200))
 		
+		local labe = nil
+		--	 Тестирование: добавим несколько меток
+		ForPlayer.MouseButton1Click:Connect(function()
+			if	ForPlayer_click == false then
+				ForPlayer_click = true
+
+				local Player = game.Players:GetPlayers()
+				local player_name = ""
+
+				for _, player in ipairs(Player) do
+					player_name = player_name .. player.Name .. " Backpack\n"
+					local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)
+
+					for _, tool in ipairs(backpack:GetChildren()) do
+						player_name = player_name .. tool.Name .. "\n"
+						if tool == nil then
+							player_name = player_name .. "Unknow \n"
+						end
+					end
+				end
+				labe = CreateLabel(player_name)
+				scrollingFrame.Visible = true
+			else
+				ForPlayer_click = false
+				if labe then
+					labe:Destroy()
+					labe = nil
+				end
+				scrollingFrame.Visible = false
+			end
+
+		end)
+
+		-- Подключение ESP
+		ESP.MouseButton1Click:Connect(function()
+			if ESP_Click == false then
+				ESP_Click = true
+				for _, player in ipairs(players:GetPlayers()) do
+					createESP(player)
+				end
+
+				players.PlayerAdded:Connect(createESP)
+				players.PlayerRemoving:Connect(removeESP)
+
+				game:GetService("RunService").RenderStepped:Connect(function()
+					for player, drawingObjects in pairs(drawings) do
+						local character = player.Character
+						if character and character:FindFirstChild("HumanoidRootPart") then
+							local pos, onScreen = camera:WorldToViewportPoint(character.HumanoidRootPart.Position)
+							local box, health = unpack(drawingObjects)
+
+							box.Visible = onScreen
+							health.Visible = onScreen
+							if onScreen then
+								box.Position = Vector2.new(pos.X, pos.Y - 20)
+								health.Position = Vector2.new(pos.X, pos.Y + 20)
+							end
+						else
+							for _, drawing in ipairs(drawingObjects) do
+								drawing.Visible = false
+							end
+						end
+					end
+				end)
+			else 
+				ESP_Click = false
+				for _, player in ipairs(players:GetPlayers()) do
+					removeESP(player)
+				end
+				drawings = {}
+			end
+
+		end)
+
+		-- Переменные коннекторы
+		local con 
+		local conn
+		AutoFarm.MouseButton1Click:Connect(function()
+			local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+			local RunService = game:GetService("RunService")
+
+			-- Проверка наличия папки Enemies
+			local enemiesFolder = workspace:FindFirstChild("Enemies")
+			while not enemiesFolder do
+				wait(0.1)
+				enemiesFolder = workspace:FindFirstChild("Enemies")
+			end
+
+			if not TpNpc_Click then
+				TpNpc_Click = true
+				-- Устанавливаем коннектор
+				con = RunService.RenderStepped:Connect(function()
+					local npcPosition = FindNPC("Bandit")
+					if npcPosition then
+						humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+25, npcPosition.Z)
+					end
+				end)
+			else
+				TpNpc_Click = false
+				-- Проверяем, есть ли коннектор и отключаем его
+				if con then
+					con:Disconnect()
+				end
+			end
+			conn = RunService.RenderStepped:Connect(function()
+				local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
+				if tool:IsA("Melee") then
+					tool:Activate()
+				end
+
+			end)
+		end)
+
+		
 	else
 		Zunesh_hub_click = false
 		if ESP and ForPlayer and AutoFarm then
@@ -123,117 +238,3 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 	end
 end)
 
-
-local labe = nil
---	 Тестирование: добавим несколько меток
-ForPlayer.MouseButton1Click:Connect(function()
-	if	ForPlayer_click == false then
-		ForPlayer_click = true
-		
-		local Player = game.Players:GetPlayers()
-		local player_name = ""
-
-		for _, player in ipairs(Player) do
-			player_name = player_name .. player.Name .. " Backpack\n"
-			local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)
-
-			for _, tool in ipairs(backpack:GetChildren()) do
-				player_name = player_name .. tool.Name .. "\n"
-				if tool == nil then
-					player_name = player_name .. "Unknow \n"
-				end
-			end
-		end
-		labe = CreateLabel(player_name)
-		scrollingFrame.Visible = true
-	else
-		ForPlayer_click = false
-		if labe then
-			labe:Destroy()
-			labe = nil
-		end
-		scrollingFrame.Visible = false
-	end
-	
-end)
-
--- Подключение ESP
-ESP.MouseButton1Click:Connect(function()
-	if ESP_Click == false then
-		ESP_Click = true
-		for _, player in ipairs(players:GetPlayers()) do
-			createESP(player)
-		end
-
-		players.PlayerAdded:Connect(createESP)
-		players.PlayerRemoving:Connect(removeESP)
-
-		game:GetService("RunService").RenderStepped:Connect(function()
-			for player, drawingObjects in pairs(drawings) do
-				local character = player.Character
-				if character and character:FindFirstChild("HumanoidRootPart") then
-					local pos, onScreen = camera:WorldToViewportPoint(character.HumanoidRootPart.Position)
-					local box, health = unpack(drawingObjects)
-
-					box.Visible = onScreen
-					health.Visible = onScreen
-					if onScreen then
-						box.Position = Vector2.new(pos.X, pos.Y - 20)
-						health.Position = Vector2.new(pos.X, pos.Y + 20)
-					end
-				else
-					for _, drawing in ipairs(drawingObjects) do
-						drawing.Visible = false
-					end
-				end
-			end
-		end)
-	else 
-		ESP_Click = false
-		for _, player in ipairs(players:GetPlayers()) do
-			removeESP(player)
-		end
-		drawings = {}
-	end
-
-end)
-
--- Переменные коннекторы
-local con 
-local conn
-AutoFarm.MouseButton1Click:Connect(function()
-	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
-	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-	local RunService = game:GetService("RunService")
-
-	-- Проверка наличия папки Enemies
-	local enemiesFolder = workspace:FindFirstChild("Enemies")
-	while not enemiesFolder do
-		wait(0.1)
-		enemiesFolder = workspace:FindFirstChild("Enemies")
-	end
-
-	if not TpNpc_Click then
-		TpNpc_Click = true
-		-- Устанавливаем коннектор
-		con = RunService.RenderStepped:Connect(function()
-			local npcPosition = FindNPC("Bandit")
-			if npcPosition then
-				humanoidRootPart.CFrame = CFrame.new(npcPosition.X, npcPosition.Y+25, npcPosition.Z)
-			end
-		end)
-	else
-		TpNpc_Click = false
-		-- Проверяем, есть ли коннектор и отключаем его
-		if con then
-			con:Disconnect()
-		end
-	end
-	conn = RunService.RenderStepped:Connect(function()
-		local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
-		if tool:IsA("Melee") then
-			tool:Activate()
-		end
-		
-	end)
-end)
