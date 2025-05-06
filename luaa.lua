@@ -125,7 +125,10 @@ ForPlayer.MouseButton1Click:Connect(function()
 		scrollingFrame.Visible = true
 	else
 		ForPlayer_click = false
-		labe:Destroy()
+		if labe then
+			labe:Destroy()
+			labe = nil
+		end
 		scrollingFrame.Visible = false
 	end
 	
