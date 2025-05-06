@@ -108,7 +108,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 		Zunesh_hub_click = true
 		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40))
 		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40))
-		AutoFarm = CreateButton("Tp",UDim2.new(0,20,0,200),UDim2.new(0, 150, 0, 40))
+		AutoFarm = CreateButton("AutoFarm",UDim2.new(0,20,0,200),UDim2.new(0, 150, 0, 40))
 		
 		local labe = nil
 		--	 Тестирование: добавим несколько меток
@@ -215,13 +215,6 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 					con:Disconnect()
 				end
 			end
-			conn = RunService.RenderStepped:Connect(function()
-				local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Melee")
-				if tool:IsA("Melee") then
-					tool:Activate()
-				end
-
-			end)
 		end)
 
 		
