@@ -8,6 +8,7 @@ screenui.Parent = localPlayer:WaitForChild("PlayerGui")
 
 local drawings = {}
 local NPC = workspace:WaitForChild("Enemies")
+
 function FindNPC(npcName)
 	for _, npc in ipairs(NPC:GetChildren()) do
 		if npc.Name == npcName and npc:FindFirstChild("HumanoidRootPart") then
@@ -16,6 +17,7 @@ function FindNPC(npcName)
 	end
 	return nil
 end
+
 function createESP(player)
 	if player == localPlayer then return end
 
@@ -70,40 +72,23 @@ function CreateButton(text, pos)
 	return Button
 end
 
-local scrollingFrame = Instance.new("ScrollingFrame")
-scrollingFrame.Size = UDim2.new(0, 300, 0, 200)  -- Задаем размер scrollingFrame
-scrollingFrame.Position = UDim2.new(0, 100, 0, 100)  -- Устанавливаем позицию на экране
-scrollingFrame.Parent = screenui
-scrollingFrame.BackgroundTransparency = 0.5  -- Прозрачность фона
-scrollingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Цвет фона
-scrollingFrame.ScrollBarThickness = 8  -- Толщина полосы прокрутки
-scrollingFrame.ClipsDescendants = true  -- Обеспечиваем, чтобы содержимое не выходило за пределы
-scrollingFrame.Visible = false  -- Скрываем по умолчанию
-
--- Инициализация CanvasSize
-scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)  -- Начальный размер канвы
 
 
--- Функция для создания метки
-function CreateLabel(text, pos)
-	local label = Instance.new("TextLabel")
-	label.Name = "Label"
-	label.Text = text
-	label.BackgroundTransparency = 0.3
-	label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-	label.TextSize = 18
-	label.TextColor3 = Color3.new(1, 1, 1)
-	label.TextWrapped = true
-	label.TextYAlignment = Enum.TextYAlignment.Top
-	label.TextXAlignment = Enum.TextXAlignment.Left
-	label.Position = pos
-	label.Size = UDim2.new(1, -10, 0, 50)  -- Сделаем высоту фиксированной для отладки
-	label.Parent = scrollingFrame
+local scrollingFrame = Instance.new("ScrollingFrame", screenui)
+scrollingFrame.Size = UDim2.new(0, 400, 0, 300)
+scrollingFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 1000) -- вручную указываем большую высоту
+scrollingFrame.ScrollBarThickness = 8
+scrollingFrame.Visible = false
 
-	-- Обновление CanvasSize для корректного отображения
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, scrollingFrame.CanvasSize.Y.Offset + label.Size.Y.Offset)
-
-	return label
+function CreateLabel(text)
+	local textLabel = Instance.new("TextLabel", scrollingFrame)
+	textLabel.Size = UDim2.new(1, 0, 0, 1000) -- текст на всю CanvasSize
+	textLabel.TextWrapped = true
+	textLabel.TextYAlignment = Enum.TextYAlignment.Top
+	textLabel.BackgroundTransparency = 1
+	textLabel.Text = text
+	return textLabel
 end
 
 
@@ -117,50 +102,26 @@ local ESP_Click = false
 
 --	 Тестирование: добавим несколько меток
 ForPlayer.MouseButton1Click:Connect(function()
-	local playersList = game.Players:GetPlayers()  -- Получаем список всех игроков
-	local playerr = ""
+	local Player = game.Players:GetPlayers()
+	local player_name = ""
 
-	for _, player in ipairs(playersList) do
-		playerr = playerr .. player.Name .. "'s Backpack:\n"
-
-		-- Ждем, пока у игрока не будет рюкзака
+	for _, player in ipairs(Player) do
+		player_name = player_name .. player.Name .. " Backpack\n"
 		local backpack = player:FindFirstChild("Backpack") or player:WaitForChild("Backpack", 10)
-		if backpack then
-			-- Собираем все инструменты в рюкзаке
-			local tools = {}
-			for _, tool in ipairs(backpack:GetChildren()) do
-				if tool:IsA("Tool") then
-					table.insert(tools, tool.Name)
-				end
-			end
-			-- Если в рюкзаке есть инструменты
-			if #tools > 0 then
-				playerr = playerr .. table.concat(tools, "\n") .. "\n"
-			else
-				playerr = playerr .. "No Tools in Backpack\n"
-			end
-		else
-			playerr = playerr .. "No Backpack found\n"
+
+		for _, tool in ipairs(backpack:GetChildren()) do
+			player_name = player_name .. tool.Name .. "\n"
 		end
 	end
 
-	-- Печать для отладки
-	print(playerr)
-
-	-- Создаем метку
-	local labeloutput = CreateLabel(playerr, UDim2.new(0, 10, 0, 10))
-
-	-- Делаем scrollingFrame видимым
+	wait(5)
+	local labe = CreateLabel(player_name)
 	scrollingFrame.Visible = true
-
-	-- Обновляем размер канвы, если текст слишком длинный
-	task.wait(0.1)
-	scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, scrollingFrame.CanvasSize.Y.Offset + labeloutput.Size.Y.Offset)
+	wait(15)
+	labe:Destroy()
+	scrollingFrame.Visible = false
 end)
 
-
-
-	
 -- Подключение ESP
 ESP.MouseButton1Click:Connect(function()
 	if ESP_Click == false then
@@ -202,7 +163,8 @@ ESP.MouseButton1Click:Connect(function()
 
 end)
 
-local con -- Инициализация переменной коннектора
+-- Переменные коннекторы
+local con 
 local conn
 TpNpc.MouseButton1Click:Connect(function()
 	local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
