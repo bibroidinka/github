@@ -91,7 +91,7 @@ function CreateLabel(text)
 	return textLabel
 end
 
-local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50),UDim2.new(0, 40, 0, 40))
+local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50), UDim2.new(0, 40, 0, 40))
 
 
 local Zunesh_hub_click = false
