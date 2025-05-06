@@ -67,7 +67,7 @@ function CreateButton(text, pos,size)
 	Button.TextStrokeColor3 = Color3.new(0, 0, 0)
 	Button.TextStrokeTransparency = 0
 	Button.Position = pos
-	Button.Size = UDim2.new(size)
+	Button.Size = size
 	Button.Parent = screenui
 	return Button
 end
@@ -91,7 +91,7 @@ function CreateLabel(text)
 	return textLabel
 end
 
-local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50),0, 40, 0, 40)
+local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50),UDim2(0, 40, 0, 40))
 
 
 local Zunesh_hub_click = false
@@ -106,9 +106,9 @@ local AutoFarm
 Zunesh_Hub.MouseButton1Click:Connect(function()
 	if Zunesh_hub_click == false then
 		Zunesh_hub_click = true
-		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),0, 150, 0, 40)
-		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),0, 150, 0, 40)
-		AutoFarm = CreateButton("Tp",UDim2.new(0,20,0,200),0, 150, 0, 40)
+		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40))
+		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40))
+		AutoFarm = CreateButton("Tp",UDim2.new(0,20,0,200),UDim2.new(0, 150, 0, 40))
 		
 		local labe = nil
 		--	 Тестирование: добавим несколько меток
