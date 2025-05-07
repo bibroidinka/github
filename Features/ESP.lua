@@ -48,10 +48,10 @@ function module.Setup(button)
 	local renderConnection
 
 	button.MouseButton1Click:Connect(function()
-		isActive = not isActive
-		button.Text = isActive and "✓" or ""
 
 		if isActive then
+			isActive = true
+			button.Text = isActive and "✓" or ""
 			for _, p in ipairs(players:GetPlayers()) do createESP(p) end
 			players.PlayerAdded:Connect(createESP)
 			players.PlayerRemoving:Connect(removeESP)
@@ -75,6 +75,7 @@ function module.Setup(button)
 				end
 			end)
 		else
+			isActive = false
 			if renderConnection then renderConnection:Disconnect() end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
 		end
