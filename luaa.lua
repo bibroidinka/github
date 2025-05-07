@@ -56,7 +56,7 @@ function removeESP(player)
 	end
 end
 
-function CreateButton(text, pos,size)
+function CreateButton(text, pos,size,parent)
 	local Button = Instance.new("TextButton")
 	Button.Name = text
 	Button.Text = text
@@ -68,10 +68,18 @@ function CreateButton(text, pos,size)
 	Button.TextStrokeTransparency = 0
 	Button.Position = pos
 	Button.Size = size
-	Button.Parent = screenui
+	Button.Parent = parent or screenui
 	return Button
 end
 
+local Frame = Instance.new("Frame")
+Frame.Name = "Frame"
+Frame.Position = UDim2.new(0,350,0,25)
+Frame.Size = UDim2.new(0, 500, 0, 500)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.5
+Frame.Parent = screenui
+Frame.Visible = false
 
 
 local scrollingFrame = Instance.new("ScrollingFrame", screenui)
@@ -91,7 +99,7 @@ function CreateLabel(text)
 	return textLabel
 end
 
-local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50), UDim2.new(0, 40, 0, 40))
+local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50), UDim2.new(0, 40, 0, 40),screenui)
 
 
 local Zunesh_hub_click = false
@@ -106,9 +114,10 @@ local AutoFarm
 Zunesh_Hub.MouseButton1Click:Connect(function()
 	if Zunesh_hub_click == false then
 		Zunesh_hub_click = true
-		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40))
-		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40))
-		AutoFarm = CreateButton("AutoFarm",UDim2.new(0,20,0,200),UDim2.new(0, 150, 0, 40))
+		
+		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40),Frame)
+		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40),Frame)
+		AutoFarm = CreateButton("",UDim2.new(0,20,0,200),UDim2.new(0, 40, 0, 40),Frame)
 		
 		local labe = nil
 		--	 Тестирование: добавим несколько меток
@@ -200,6 +209,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 			end
 
 			if not TpNpc_Click then
+				AutoFarm.Text = "✓"
 				TpNpc_Click = true
 				-- Устанавливаем коннектор
 				con = RunService.RenderStepped:Connect(function()
@@ -210,6 +220,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 				end)
 			else
 				TpNpc_Click = false
+				AutoFarm.Text = ""
 				-- Проверяем, есть ли коннектор и отключаем его
 				if con then
 					con:Disconnect()
