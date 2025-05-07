@@ -84,7 +84,7 @@ Frame.Visible = false
 
 local scrollingFrame = Instance.new("ScrollingFrame", screenui)
 scrollingFrame.Size = UDim2.new(0, 400, 0, 300)
-scrollingFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+scrollingFrame.Position = UDim2.new(0.5, -250, 0.5, -250)
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 1000) -- вручную указываем большую высоту
 scrollingFrame.ScrollBarThickness = 8
 scrollingFrame.Visible = false
