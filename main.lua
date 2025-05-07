@@ -14,14 +14,21 @@ local backpackCheck = loadstring(backpackCheckScript)()
 
 -- Инициализация UI
 ui.Initialize()
-
+		
 -- Создание кнопки для "Zunesh Hub"
 local Zunesh_Hub = ui.CreateButton("Zunesh Hub", UDim2.new(0, 20, 0, 50), UDim2.new(0, 40, 0, 40))
 
 -- Обработчик нажатия кнопки
 Zunesh_Hub.MouseButton1Click:Connect(function()
-    ui.ToggleFrame()
-    esp.ToggleESP()
-    autofarm.ToggleAutoFarm()
-    backpackCheck.ToggleBackpackCheck()
+	ui.ToggleFrame()
+	if _G.Enable_ESP == true then
+		esp.ToggleESP()
+	else
+		esp.ToggleRemove()
+	end
+	if _G.Enable_ForPlayer == true then
+		backpackCheck.ToggleBackpackCheck()
+	else
+		backpackCheck.RemoveFrame()
+	end
 end)
