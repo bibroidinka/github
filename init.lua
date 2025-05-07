@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local camera = workspace.CurrentCamera
@@ -8,6 +7,7 @@ local module = {}
 local drawings = {}
 local Frame, scrollingFrame
 
+-- Создание кнопки
 function module.createButton(text, pos, size, parent)
     local Button = Instance.new("TextButton")
     Button.Name = text
@@ -24,16 +24,19 @@ function module.createButton(text, pos, size, parent)
     return Button
 end
 
+-- Создание текста в ScrollingFrame
 function module.createLabel(text)
-    local textLabel = Instance.new("TextLabel", scrollingFrame)
-    textLabel.Size = UDim2.new(1, 0, 0, 1000)
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 0, 100)
     textLabel.TextWrapped = true
     textLabel.TextYAlignment = Enum.TextYAlignment.Top
     textLabel.BackgroundTransparency = 1
     textLabel.Text = text
+    textLabel.Parent = scrollingFrame  -- родитель в ScrollingFrame
     return textLabel
 end
 
+-- Поиск NPC
 function module.findNPC(npcName)
     local NPC = workspace:WaitForChild("Enemies")
     for _, npc in ipairs(NPC:GetChildren()) do
@@ -44,6 +47,7 @@ function module.findNPC(npcName)
     return nil
 end
 
+-- Создание ESP
 function module.createESP(player)
     if player == Players.LocalPlayer then return end
 
@@ -73,6 +77,7 @@ function module.createESP(player)
     end)
 end
 
+-- Удаление ESP
 function module.removeESP(player)
     if drawings[player] then
         for _, drawing in ipairs(drawings[player]) do
@@ -82,7 +87,9 @@ function module.removeESP(player)
     end
 end
 
+-- Инициализация интерфейса
 function module.init(screenui)
+    -- Создание фрейма
     Frame = Instance.new("Frame")
     Frame.Name = "Frame"
     Frame.Position = UDim2.new(0.5, -250, 0.5, -250)
@@ -92,19 +99,24 @@ function module.init(screenui)
     Frame.Parent = screenui
     Frame.Visible = false
 
-    scrollingFrame = Instance.new("ScrollingFrame", screenui)
+    -- Создание ScrollingFrame
+    scrollingFrame = Instance.new("ScrollingFrame")
     scrollingFrame.Size = UDim2.new(0, 400, 0, 300)
     scrollingFrame.Position = UDim2.new(0.5, -250, 0.5, -250)
     scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 1000)
     scrollingFrame.ScrollBarThickness = 8
     scrollingFrame.Visible = false
+    scrollingFrame.Parent = screenui  -- добавляем в screenui
 
+    -- Кнопка для открытия
     local mainButton = module.createButton("Zunesh Hub", UDim2.new(0, 20, 0, 50), UDim2.new(0, 40, 0, 40), screenui)
     local open = false
 
+    -- Обработчик кнопки
     mainButton.MouseButton1Click:Connect(function()
         open = not open
         Frame.Visible = open
+        scrollingFrame.Visible = open
     end)
 end
 
