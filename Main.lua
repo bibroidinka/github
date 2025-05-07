@@ -36,13 +36,13 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 	if Zunesh_hub_click then
 		-- Кнопки + ярлыки
 		local ESP_Label = CreateLabel("ESP", UDim2.new(0,0,0,0), Frame)
-		local ESP_Button = CreateButton("", UDim2.new(0,0,0,30), UDim2.new(0,40,0,40), Frame)
+		local ESP_Button = CreateButton("", UDim2.new(0,0,0,40), UDim2.new(0,40,0,40), Frame)
 
-		local BP_Label = CreateLabel("Backpack Check", UDim2.new(0,0,0,60), Frame)
-		local BP_Button = CreateButton("", UDim2.new(0,0,0,90), UDim2.new(0,40,0,40), Frame)
+		local BP_Label = CreateLabel("Backpack Check", UDim2.new(0,0,0,80), Frame)
+		local BP_Button = CreateButton("", UDim2.new(0,0,0,120), UDim2.new(0,40,0,40), Frame)
 
-		local AF_Label = CreateLabel("AutoFarm", UDim2.new(0,0,0,120), Frame)
-		local AF_Button = CreateButton("", UDim2.new(0,0,0,150), UDim2.new(0,40,0,40), Frame)
+		local AF_Label = CreateLabel("AutoFarm", UDim2.new(0,0,0,160), Frame)
+		local AF_Button = CreateButton("", UDim2.new(0,0,0,200), UDim2.new(0,40,0,40), Frame)
 
 		-- Подключения
 		ESP.Setup(ESP_Button)
