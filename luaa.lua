@@ -46,7 +46,7 @@ function createESP(player)
 		health.Text = "Health: " .. tostring(humanoid.Health)
 	end)
 end
-	
+
 function removeESP(player)
 	if drawings[player] then
 		for _, drawing in ipairs(drawings[player]) do
@@ -113,12 +113,12 @@ local AutoFarm
 Zunesh_Hub.MouseButton1Click:Connect(function()
 	if Zunesh_hub_click == false then
 		Zunesh_hub_click = true
-		
+
 		Frame.Visible = true
 		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40),Frame)
 		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40),Frame)
 		AutoFarm = CreateButton("",UDim2.new(0,20,0,200),UDim2.new(0, 40, 0, 40),Frame)
-		
+
 		local labe = nil
 		--	 Тестирование: добавим несколько меток
 		ForPlayer.MouseButton1Click:Connect(function()
@@ -141,6 +141,10 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 				end
 				labe = CreateLabel(player_name)
 				scrollingFrame.Visible = true
+				wait(20)
+				labe:Destroy()
+				labe = nil
+				scrollingFrame.Visible = false
 			else
 				ForPlayer_click = false
 				if labe then
@@ -229,7 +233,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 			end
 		end)
 
-		
+
 	else
 		Zunesh_hub_click = false
 		if ESP and ForPlayer and AutoFarm then
