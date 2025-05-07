@@ -59,6 +59,7 @@ function ui.ToggleFrame()
 		AutoFarm = ui.CreateButton("", UDim2.new(0, 20, 0, 200), UDim2.new(0, 40, 0, 40), Frame)
 		ESP.MouseButton1Click:Connect(function()
 			if ESP_Click == false then
+				print("ESP Button Clicked")  
 				ESP_Click = true
 				_G.Enable_ESP = true
 			else
