@@ -42,25 +42,23 @@ local function removeESP(player)
 	end
 end
 
-local playerAdded, playerRemoved, renderConnection
+local playerAdded,playerRemove
+
 
 function module.Setup(button)
 	local isActive = false
 	local runService = game:GetService("RunService")
+	local renderConnection
 
 	button.MouseButton1Click:Connect(function()
-		if not isActive then
+
+		if isActive == false then
 			isActive = true
 			button.Text = "✓"
-
-			-- Создаем ESP для всех игроков
 			for _, p in ipairs(players:GetPlayers()) do createESP(p) end
-
-			-- Подключаем события PlayerAdded и PlayerRemoving
 			playerAdded = players.PlayerAdded:Connect(createESP)
-			playerRemoved = players.PlayerRemoving:Connect(removeESP)
+			playerRemove = players.PlayerRemoving:Connect(removeESP)
 
-			-- Подключаем RenderStepped для отображения
 			if renderConnection then renderConnection:Disconnect() end
 			renderConnection = runService.RenderStepped:Connect(function()
 				for player, drawingObjects in pairs(drawings) do
@@ -79,32 +77,23 @@ function module.Setup(button)
 					end
 				end
 			end)
-
 		else
-			-- Отключаем ESP
 			isActive = false
 			button.Text = ""
-
-			-- Отключаем события PlayerAdded и PlayerRemoving
-			if playerAdded then 
-				playerAdded:Disconnect() 
+			if playerAdded then playerAdded:Disconnect() 
 				print("Disconnecting PlayerAdded")
 			end
-			if playerRemoved then 
-				playerRemoved:Disconnect() 
+			if playerRemove then playerRemove:Disconnect() 
 				print("Disconnecting PlayerRemoving")
 			end
-
-			-- Отключаем RenderStepped
-			if renderConnection then 
-				renderConnection:Disconnect() 
+			if renderConnection then renderConnection:Disconnect() 
 				print("Disconnecting RenderStepped")
 			end
-
-			-- Удаляем все объекты ESP
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
-
-			-- Очищаем таблицу drawings
+			
+			table.clear(drawings)
+			table.clear(drawings)
+			table.clear(drawings)
 			table.clear(drawings)
 		end
 	end)
