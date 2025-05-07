@@ -1,10 +1,10 @@
 -- main.lua
 
 -- Загрузка модулей с GitHub
-local uiScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/ZuneshHub/ui.lua")
-local espScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/ZuneshHub/esp.lua")
-local autofarmScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/ZuneshHub/autofarm.lua")
-local backpackCheckScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/ZuneshHub/backpackCheck.lua")
+local uiScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/ui.lua")
+local espScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/esp.lua")
+local autofarmScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/autofarm.lua")
+local backpackCheckScript = game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/backpackCheck.lua")
 
 -- Загружаем модули
 local ui = loadstring(uiScript)()
