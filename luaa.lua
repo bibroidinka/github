@@ -115,6 +115,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 	if Zunesh_hub_click == false then
 		Zunesh_hub_click = true
 		
+		Frame.Visible = true
 		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40),Frame)
 		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40),Frame)
 		AutoFarm = CreateButton("",UDim2.new(0,20,0,200),UDim2.new(0, 40, 0, 40),Frame)
@@ -240,6 +241,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 			ForPlayer = nil
 			AutoFarm = nil
 		end
+		Frame.Visible = false
 	end
 end)
 
