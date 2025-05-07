@@ -3,11 +3,11 @@ local localPlayer = players.LocalPlayer
 local screenui = Instance.new("ScreenGui", localPlayer:WaitForChild("PlayerGui"))
 screenui.Name = "Zunesh Hub"
 
-local CreateButton = require(script.UI.CreateButton)
-local CreateLabel = require(script.UI.CreateLabel)
-local ESP = require(script.Features.ESP)
-local AutoFarm = require(script.Features.AutoFarm)
-local BackpackViewer = require(script.Features.BackpackViewer)
+local CreateButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/UI/CreateButton.lua"))()
+local CreateLabel = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/UI/CreateLabel.lua"))()
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/ESP.lua"))()
+local AutoFarm = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/AutoFarm.lua"))()
+local BackpackViewer = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/BackpackViewer.lua"))()
 
 -- UI элементы
 local Frame = Instance.new("Frame")
