@@ -1,5 +1,5 @@
+local uiModule = require(script.Parent.ui)  -- Получаем модуль с интерфейсом
+local screenui = uiModule.ui  -- Доступ к объекту ScreenGui через module.ui
 
-local screenui = require(script.Parent.ui)
-local guiLogic = require(script.Parent.init)
-
-guiLogic.init(screenui)
+local guiLogic = require(script.Parent.guiLogic)  -- Подключаем логику
+guiLogic.init(screenui)  -- Передаем screenui в логику интерфейса
