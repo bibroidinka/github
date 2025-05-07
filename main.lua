@@ -22,6 +22,7 @@ local Zunesh_Hub = ui.CreateButton("Zunesh Hub", UDim2.new(0, 20, 0, 50), UDim2.
 Zunesh_Hub.MouseButton1Click:Connect(function()
 	ui.ToggleFrame()
 	if _G.Enable_ESP == true then
+		print("toggleesp вызван")
 		esp.ToggleESP()
 	else
 		esp.ToggleRemove()
