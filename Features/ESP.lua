@@ -49,7 +49,7 @@ function module.Setup(button)
 
 	button.MouseButton1Click:Connect(function()
 
-		if isActive then
+		if isActive == false then
 			isActive = true
 			button.Text = isActive and "✓" or ""
 			for _, p in ipairs(players:GetPlayers()) do createESP(p) end
