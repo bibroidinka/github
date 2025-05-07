@@ -42,6 +42,9 @@ local function removeESP(player)
 	end
 end
 
+local playerAdded,playerRemove
+
+
 function module.Setup(button)
 	local isActive = false
 	local runService = game:GetService("RunService")
@@ -53,8 +56,8 @@ function module.Setup(button)
 			isActive = true
 			button.Text = "✓"
 			for _, p in ipairs(players:GetPlayers()) do createESP(p) end
-			players.PlayerAdded:Connect(createESP)
-			players.PlayerRemoving:Connect(removeESP)
+			playerAdded = players.PlayerAdded:Connect(createESP)
+			playerRemove = players.PlayerRemoving:Connect(removeESP)
 
 			if renderConnection then renderConnection:Disconnect() end
 			renderConnection = runService.RenderStepped:Connect(function()
@@ -77,6 +80,8 @@ function module.Setup(button)
 		else
 			isActive = false
 			button.Text = ""
+			if playerAdded then playerAdded:Disconnect() end
+			if playerRemove then playerRemove:Disconnect() end
 			if renderConnection then renderConnection:Disconnect() end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
 			table.clear(drawings)
