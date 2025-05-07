@@ -45,8 +45,10 @@ end
 function module.Setup(button)
 	local isActive = false
 	local runService = game:GetService("RunService")
+	local renderConnection
 
 	button.MouseButton1Click:Connect(function()
+		isActive = not isActive
 		button.Text = isActive and "✓" or ""
 
 		if isActive then
@@ -54,7 +56,8 @@ function module.Setup(button)
 			players.PlayerAdded:Connect(createESP)
 			players.PlayerRemoving:Connect(removeESP)
 
-			runService.RenderStepped:Connect(function()
+			if renderConnection then renderConnection:Disconnect() end
+			renderConnection = runService.RenderStepped:Connect(function()
 				for player, drawingObjects in pairs(drawings) do
 					local char = player.Character
 					if char and char:FindFirstChild("HumanoidRootPart") then
@@ -72,6 +75,7 @@ function module.Setup(button)
 				end
 			end)
 		else
+			if renderConnection then renderConnection:Disconnect() end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
 		end
 	end)
