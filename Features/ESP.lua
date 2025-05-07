@@ -47,7 +47,6 @@ function module.Setup(button)
 	local runService = game:GetService("RunService")
 
 	button.MouseButton1Click:Connect(function()
-		isActive = not isActive
 		button.Text = isActive and "✓" or ""
 
 		if isActive then
