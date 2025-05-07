@@ -78,6 +78,7 @@ function module.Setup(button)
 			isActive = false
 			if renderConnection then renderConnection:Disconnect() end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
+			table.clear(drawings)
 		end
 	end)
 end
