@@ -81,6 +81,40 @@ Frame.BackgroundTransparency = 0.5
 Frame.Parent = screenui
 Frame.Visible = false
 
+function MakeDraggable(frame)
+	local dragging = false
+	local dragInput, mousePos, framePos
+
+	frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
+			mousePos = input.Position
+			framePos = frame.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			dragInput = input
+		end
+	end)
+
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			local delta = input.Position - mousePos
+			frame.Position = UDim2.new(
+				framePos.X.Scale, framePos.X.Offset + delta.X,
+				framePos.Y.Scale, framePos.Y.Offset + delta.Y
+			)
+		end
+	end)
+end
 
 local scrollingFrame = Instance.new("ScrollingFrame", screenui)
 scrollingFrame.Size = UDim2.new(0, 400, 0, 300)
@@ -116,6 +150,7 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 		Zunesh_hub_click = true
 		
 		Frame.Visible = true
+		MakeDraggable(Frame)
 		ESP = CreateButton("ESP", UDim2.new(0, 20, 0, 100),UDim2.new(0, 150, 0, 40),Frame)
 		ForPlayer = CreateButton("Backpack Check", UDim2.new(0, 20, 0, 150),UDim2.new(0, 150, 0, 40),Frame)
 		AutoFarm = CreateButton("",UDim2.new(0,20,0,200),UDim2.new(0, 40, 0, 40),Frame)
