@@ -51,7 +51,7 @@ function module.Setup(button)
 
 		if isActive == false then
 			isActive = true
-			button.Text = isActive and "✓" or ""
+			button.Text = "✓"
 			for _, p in ipairs(players:GetPlayers()) do createESP(p) end
 			players.PlayerAdded:Connect(createESP)
 			players.PlayerRemoving:Connect(removeESP)
@@ -76,6 +76,7 @@ function module.Setup(button)
 			end)
 		else
 			isActive = false
+			button.Text = ""
 			if renderConnection then renderConnection:Disconnect() end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
 			table.clear(drawings)
