@@ -80,9 +80,15 @@ function module.Setup(button)
 		else
 			isActive = false
 			button.Text = ""
-			if playerAdded then playerAdded:Disconnect() end
-			if playerRemove then playerRemove:Disconnect() end
-			if renderConnection then renderConnection:Disconnect() end
+			if playerAdded then playerAdded:Disconnect() 
+				print("Disconnecting PlayerAdded")
+			end
+			if playerRemove then playerRemove:Disconnect() 
+				print("Disconnecting PlayerRemoving")
+			end
+			if renderConnection then renderConnection:Disconnect() 
+				print("Disconnecting RenderStepped")
+			end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
 			table.clear(drawings)
 		end
