@@ -27,6 +27,11 @@ scrollingFrame.Visible = false
 
 -- Кнопка открытия
 local Zunesh_Hub = CreateButton("Zunesh Hub", UDim2.new(0,20,0,50), UDim2.new(0, 40, 0, 40), screenui)
+local Button_Create = false
+
+local ESP_Label,ESP_Button
+local BP_Label,BP_Button
+local AF_Label,AF_Button
 
 local Zunesh_hub_click = false
 Zunesh_Hub.MouseButton1Click:Connect(function()
@@ -34,21 +39,24 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 	Frame.Visible = Zunesh_hub_click
 
 	if Zunesh_hub_click then
-		-- Кнопки + ярлыки
-		local ESP_Label = CreateLabel("ESP", UDim2.new(0,0,0,0), Frame)
-		local ESP_Button = CreateButton("", UDim2.new(0,0,0,40), UDim2.new(0,40,0,40), Frame)
+		if Button_Create == false then
+			Button_Create = true
+			-- Кнопки + ярлыки
+			ESP_Label = CreateLabel("ESP", UDim2.new(0,0,0,0), Frame)
+			ESP_Button = CreateButton("", UDim2.new(0,0,0,40), UDim2.new(0,40,0,40), Frame)
 
-		local BP_Label = CreateLabel("Backpack Check", UDim2.new(0,0,0,80), Frame)
-		local BP_Button = CreateButton("", UDim2.new(0,0,0,120), UDim2.new(0,40,0,40), Frame)
+			BP_Label = CreateLabel("Backpack Check", UDim2.new(0,0,0,80), Frame)
+			BP_Button = CreateButton("", UDim2.new(0,0,0,120), UDim2.new(0,40,0,40), Frame)
 
-		local AF_Label = CreateLabel("AutoFarm", UDim2.new(0,0,0,160), Frame)
-		local AF_Button = CreateButton("", UDim2.new(0,0,0,200), UDim2.new(0,40,0,40), Frame)
-
+			AF_Label = CreateLabel("AutoFarm", UDim2.new(0,0,0,160), Frame)
+			AF_Button = CreateButton("", UDim2.new(0,0,0,200), UDim2.new(0,40,0,40), Frame)
+		end
+		
 		-- Подключения
 		ESP.Setup(ESP_Button)
 		BackpackViewer.Setup(BP_Button, scrollingFrame)
 		AutoFarm.Setup(AF_Button)
 	else
-		Frame:ClearAllChildren()
+		Frame.Visible = false
 	end
 end)
