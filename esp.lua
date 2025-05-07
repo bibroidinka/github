@@ -1,13 +1,12 @@
 -- esp.lua
 local esp = {}
 
-local drawings = {}
-local camera = workspace.CurrentCamera
 local players = game:GetService("Players")
-local localPlayer = players.LocalPlayer
+local camera = workspace.CurrentCamera
+local drawings = {}
 
 function esp.CreateESP(player)
-    if player == localPlayer then return end
+    if player == game.Players.LocalPlayer then return end
 
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
@@ -45,33 +44,35 @@ function esp.RemoveESP(player)
 end
 
 function esp.ToggleESP()
+    -- Переключаем видимость всех ESP
+    local isESPVisible = false
+    for _, player in ipairs(players:GetPlayers()) do
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local pos, onScreen = camera:WorldToViewportPoint(character.HumanoidRootPart.Position)
+            local box, health = unpack(drawings[player])
+
+            box.Visible = onScreen
+            health.Visible = onScreen
+            if onScreen then
+                box.Position = Vector2.new(pos.X, pos.Y - 20)
+                health.Position = Vector2.new(pos.X, pos.Y + 20)
+            else
+                box.Visible = false
+                health.Visible = false
+            end
+        end
+    end
+end
+
+function esp.Initialize()
+    -- Вызывается для начальной установки
     for _, player in ipairs(players:GetPlayers()) do
         esp.CreateESP(player)
     end
 
     players.PlayerAdded:Connect(esp.CreateESP)
     players.PlayerRemoving:Connect(esp.RemoveESP)
-
-    game:GetService("RunService").RenderStepped:Connect(function()
-        for player, drawingObjects in pairs(drawings) do
-            local character = player.Character
-            if character and character:FindFirstChild("HumanoidRootPart") then
-                local pos, onScreen = camera:WorldToViewportPoint(character.HumanoidRootPart.Position)
-                local box, health = unpack(drawingObjects)
-
-                box.Visible = onScreen
-                health.Visible = onScreen
-                if onScreen then
-                    box.Position = Vector2.new(pos.X, pos.Y - 20)
-                    health.Position = Vector2.new(pos.X, pos.Y + 20)
-                end
-            else
-                for _, drawing in ipairs(drawingObjects) do
-                    drawing.Visible = false
-                end
-            end
-        end
-    end)
 end
 
 return esp
