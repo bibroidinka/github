@@ -12,7 +12,7 @@ local Humanoid = Character:WaitForChild("Humanoid")
 
 
 -- функция для передвижения игрока
-function moveCharacter(character,x,y,z)
+function module.moveCharacter(character,x,y,z)
     local TargetPositiones = Vector3.new(x,y,z)
     CollisionPlayer(character,false)
 
@@ -42,7 +42,7 @@ end
 function module.Setup(Tp_button)
     Tp_button.MouseButton1Click:Connect(function()
         if completed_tp then
-            moveCharacter(localPlayer.Character,0,100,5)
+            module.moveCharacter(localPlayer.Character,0,100,5)
         else
             print("Вы еще не долетели до места")
         end
