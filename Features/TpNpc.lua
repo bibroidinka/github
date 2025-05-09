@@ -12,7 +12,8 @@ local Humanoid = Character:WaitForChild("Humanoid")
 
 
 -- функция для передвижения игрока
-function moveCharacter(character,TargetPositiones)
+function moveCharacter(character,x,y,z)
+    local TargetPositiones = Vector3.new(x,y,z)
     CollisionPlayer(character,false)
 
 
