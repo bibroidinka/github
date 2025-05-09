@@ -13,13 +13,12 @@ local Humanoid = Character:WaitForChild("Humanoid")
 
 -- функция для передвижения игрока
 function module.moveCharacter(character,x,y,z)
-    local TargetPositiones = Vector3.new(x,y,z)
+    local targetPosition = Vector3.new(x,y,z)
     CollisionPlayer(character,false)
 
 
     local root = character:WaitForChild("HumanoidRootPart")
     local tweenInfo = TweenInfo.new(25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-    local targetPosition = Vector3.new(TargetPositiones)
     local tween = tweenService:Create(root, tweenInfo, {CFrame = CFrame.new(targetPosition)})
     tween:Play()
     completed_tp = false
