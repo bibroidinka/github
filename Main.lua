@@ -68,4 +68,3 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 	end
 end)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Main.lua"))()
