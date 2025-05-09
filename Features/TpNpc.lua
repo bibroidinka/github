@@ -10,6 +10,7 @@ local module = {}
 local Character = localPlayer.Character or localPlayer:WaitForChild("Character")
 local Humanoid = Character:WaitForChild("Humanoid")
 
+local tween
 
 -- функция для передвижения игрока
 function module.moveCharacter(character,x,y,z)
@@ -19,7 +20,7 @@ function module.moveCharacter(character,x,y,z)
 
     local root = character:WaitForChild("HumanoidRootPart")
     local tweenInfo = TweenInfo.new(14, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-    local tween = tweenService:Create(root, tweenInfo, {CFrame = CFrame.new(targetPosition.X,targetPosition.Y + 30,targetPosition.Z)})
+    tween = tweenService:Create(root, tweenInfo, {CFrame = CFrame.new(targetPosition.X,targetPosition.Y + 30,targetPosition.Z)})
     tween:Play()
     completed_tp = false
     tween.Completed:Connect(function()
@@ -35,7 +36,6 @@ function CollisionPlayer(character, cancollide)
         end
     end
 end
-
 
 function module.Setup(Tp_button)
     Tp_button.MouseButton1Click:Connect(function()
