@@ -8,6 +8,7 @@ local CreateLabel = loadstring(game:HttpGet("https://raw.githubusercontent.com/b
 local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/ESP.lua"))()
 local AutoFarm = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/AutoFarm.lua"))()
 local BackpackViewer = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/BackpackViewer.lua"))()
+local TpNpc = loadstring(game:HttpGet(""))
 
 -- UI элементы
 local Frame = Instance.new("Frame")
@@ -32,6 +33,7 @@ local Button_Create = false
 local ESP_Label,ESP_Button
 local BP_Label,BP_Button
 local AF_Label,AF_Button
+local TPNPC_Label,TPNPC_Button
 
 local Zunesh_hub_click = false
 Zunesh_Hub.MouseButton1Click:Connect(function()
@@ -50,10 +52,15 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 
 			AF_Label = CreateLabel("AutoFarm", UDim2.new(0,0,0,160), Frame)
 			AF_Button = CreateButton("", UDim2.new(0,0,0,200), UDim2.new(0,40,0,40), Frame)
+
+			TPNPC_Label = CreateLabel("TP",UDim2.new(0,0,0,240),Frame)
+			TPNPC_Button = CreateButton("",UDim2.new(0,0,0,280),UDim2.new(0,40,0,40),Frame)
 		end
 		
 		-- Подключения
+
 		ESP.Setup(ESP_Button)
+		TpNpc.Setup(TPNPC_Button)
 		BackpackViewer.Setup(BP_Button, scrollingFrame)
 		AutoFarm.Setup(AF_Button)
 	else
