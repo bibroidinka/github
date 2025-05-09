@@ -1,4 +1,9 @@
+local LocalizationService = game:GetService("LocalizationService")
 local RunService = game:GetService("RunService")
+
+local LocalPlayer = game.Players.LocalPlayer
+
+local TpNpc = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/TpNpc.lua"))()
 
 local module = {}
 local con
@@ -24,7 +29,7 @@ function module.Setup(button)
 			con = RunService.RenderStepped:Connect(function()
 				local npcPos = FindNPC("Bandit")
 				if npcPos then
-					root.CFrame = CFrame.new(npcPos.X, npcPos.Y + 25, npcPos.Z)
+					TpNpc.moveCharacter(LocalPlayer.Character,npcPos)
 				end
 			end)
 		else
