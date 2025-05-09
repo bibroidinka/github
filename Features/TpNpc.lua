@@ -27,6 +27,7 @@ function module.moveCharacter(character,x,y,z)
         completed_tp = true
         CollisionPlayer(character,true)
     end)
+    module.tween = tween
 end
 
 function CollisionPlayer(character, cancollide)
