@@ -29,7 +29,7 @@ function module.Setup(button)
 			con = RunService.RenderStepped:Connect(function()
 				local npcPos = FindNPC("Bandit")
 				if npcPos then
-					TpNpc.moveCharacter(LocalPlayer.Character,npcPos)
+					TpNpc.moveCharacter(LocalPlayer.Character,npcPos.X,npcPos.Y,npcPos.Z)
 				end
 			end)
 		else
