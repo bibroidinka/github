@@ -19,7 +19,7 @@ function module.moveCharacter(character,x,y,z)
 
     local root = character:WaitForChild("HumanoidRootPart")
     local tweenInfo = TweenInfo.new(14, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-    local tween = tweenService:Create(root, tweenInfo, {CFrame = CFrame.new(targetPosition)})
+    local tween = tweenService:Create(root, tweenInfo, {CFrame = CFrame.new(targetPosition.X,targetPosition.Y + 30,targetPosition.Z)})
     tween:Play()
     completed_tp = false
     tween.Completed:Connect(function()
