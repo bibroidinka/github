@@ -8,7 +8,7 @@ local CreateLabel = loadstring(game:HttpGet("https://raw.githubusercontent.com/b
 local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/ESP.lua"))()
 local AutoFarm = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/AutoFarm.lua"))()
 local BackpackViewer = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/BackpackViewer.lua"))()
-local TpNpc = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/TpNpc.lua"))
+local TpNpc = loadstring(game:HttpGet("https://raw.githubusercontent.com/bibroidinka/github/main/Features/TpNpc.lua"))()
 
 -- UI элементы
 local Frame = Instance.new("Frame")
