@@ -33,6 +33,7 @@ function module.Setup(button)
 				end
 			end)
 		else
+			TpNpc.tween:Cancel()
 			isOn = false
 			button.Text = ""
 			if con then con:Disconnect() con = nil end
