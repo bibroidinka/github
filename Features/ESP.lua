@@ -90,10 +90,6 @@ function module.Setup(button)
 				print("Disconnecting RenderStepped")
 			end
 			for _, p in ipairs(players:GetPlayers()) do removeESP(p) end
-			
-			table.clear(drawings)
-			table.clear(drawings)
-			table.clear(drawings)
 			table.clear(drawings)
 		end
 	end)
